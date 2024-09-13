@@ -3,6 +3,10 @@ const express = require('express');
 
 //cread Application objet
 const app=express();
+
+//將靜態檔案名稱對應到http://127.0.0.1:3000/檔案名稱
+app.use(express.static("public"));
+
 //啟動伺服器在測試網址http://127.0.0.1:3000/
 app.listen(3000, function (){
     console.log("Sever started");
@@ -48,12 +52,17 @@ app.get("/",(req,res) =>{
 app.get("/data",(req,res) =>{
     const name=req.query.city;
     if(name==="台北"){
-        res.send("城市名稱:"+name+"人口數100萬");
+        res.send({
+            pop:300, 城市名稱:name
+        });
     }else if(name==="新竹"){
-        res.send("城市名稱:"+name+"人口數70萬");
+        let data={
+            pop:1400, 城市名稱:name
+        };
+        res.send(data);
     }else if(name==="台中"){
         res.send("城市名稱:"+name+"人口數110萬");
     }else{
-        res.send("城市名稱:"+name+"樣本不足");
+        res.redirect(`https://google.com/search?q=${name}`);
     };
 });

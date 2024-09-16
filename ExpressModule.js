@@ -7,6 +7,20 @@ const app=express();
 //將靜態檔案名稱對應到http://127.0.0.1:3000/檔案名稱
 app.use(express.static("public"));
 
+//設定樣板引擎
+app.set("view engine", "ejs");
+
+//設定session 
+
+const session=require("express-session");
+app.use(session({
+    secret:"bfadhdbtns",
+    resave:false,
+    saveUninitialized:true}))
+
+//設定樣板檔案資料夾位置
+app.set("views", "./views");
+
 //啟動伺服器在測試網址http://127.0.0.1:3000/
 app.listen(3000, function (){
     console.log("Sever started");
@@ -41,27 +55,27 @@ app.get("/",(req,res) =>{
     res.send("Home page");
 */
 //依據使用者的偏好語言呈現不同的文字
+    const name=req.session.data;
     const lang=req.get("accept-language");
-    if(lang.startsWith==="zh"){
-        res.send("Home page");
+    if(lang.startsWith==="en"){
+        res.send("Hello you search"+name);
     }else{
-        res.send("首頁")
+        res.send("你好，你剛搜尋"+name);
     };
 });
 //設定路徑，預期要求字串會是城市 =city
 app.get("/data",(req,res) =>{
     const name=req.query.city;
+    req.session.data=name;
     if(name==="台北"){
-        res.send({
-            pop:300, 城市名稱:name
-        });
+        let data={pop:300, 城市名稱:name};
+        res.render("city.ejs", data);
     }else if(name==="新竹"){
-        let data={
-            pop:1400, 城市名稱:name
-        };
-        res.send(data);
+        let data={pop:40, 城市名稱:name};
+        res.render("city.ejs", data);
     }else if(name==="台中"){
-        res.send("城市名稱:"+name+"人口數110萬");
+        let data={pop:100, 城市名稱:name};
+        res.render("city.ejs", data);
     }else{
         res.redirect(`https://google.com/search?q=${name}`);
     };

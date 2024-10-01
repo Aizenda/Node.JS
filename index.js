@@ -51,8 +51,23 @@ app.get("/",(req, res) =>{
 });
 
 //會員頁面路由
-app.get("/member",(req, res)=>{
-    res.render("member.ejs");
+app.get("/member",async(req, res)=>{
+    if(!req.session.member){
+        res.redirect("/");
+        return;
+    };/*檢查是否為假，未登錄情況下，
+    SESSION有幾種狀態undefined 或 null使用!(否定)可以表示為ture，
+    進行判斷式，反之有值返回false將不會進行判斷邏輯。*/
+    const name=req.session.member.name;
+
+    //取得所有會員資料
+    const collection=db.collection("member");
+    let result=await collection.find({});
+    let data=[]
+    await result.forEach((member) => {
+        data.push(member)
+    });
+    res.render("member.ejs",{name:name, data:data});
 });
 
 //錯誤頁面
@@ -73,7 +88,7 @@ app.post("/signup", async(req,res)=>{
         email:email
     });
     if(result!==null){
-        res.redirect("/err?msg=註冊失敗，信箱重複");
+        res.redirect("/error?msg=註冊失敗，信箱重複");
         return;
     }
     //將新資料放入資料庫

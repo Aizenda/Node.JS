@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="Global">
+        <h3>
+            輸入留言
+        </h3>
+
+        <form action="/message" method="POST">
+            您的稱呼 <input type="text" name="name" style="margin-bottom: 10px;"><br/>
+            您的留言 <input type="text" name="message" style="padding: 10px; margin-bottom: 10px; width: 50%;"><br/>
+            <button>新增留言</button>
+        </form>
+        
+        <hr/>
+        <h3>留言列表</h3>
+        <% for (let i = 0; i < data.length; i++) { %>
+        <div class="divShadow">
+            <span class="fas fa-user-circle"></span>
+            <span class="name-color">
+                <%= data[i].name %>
+            </span>
+            <span>
+                <%= data[i].message %>
+            </span>
+            <div class="time-font-size">
+                <%= "B"+ (i + 1)  %>
+                <%= data[i].time.toLocaleString() %>
+            </div>
+        </div>
+        </p>
+        <% } %>
+    </div>
+</body>
+</html>

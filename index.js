@@ -63,7 +63,7 @@ app.get("/",async(req, res)=>{
         //回傳
         res.render("home.ejs", {data:data});
     } catch(err){
-        return err(res, "無法取得資料!");
+        res.redirect("/error?msg=無法取得資料")
     };
 });
 
@@ -82,7 +82,7 @@ app.post("/message", async (req, res) => {
 
         // 檢查是否為空字串
         if (!name || !message) {
-            return err(res, "姓名或留言不能為空!")
+            res.redirect("/error?msg=姓名及留言不可為空")
         } else {
             // 將資料放入資料庫
             let result = await collection.insertOne({
@@ -94,13 +94,14 @@ app.post("/message", async (req, res) => {
             // 邏輯結束導回首頁
             res.redirect("/");};
         } catch(err){
-            return err(res, "留言失敗!");
-        };
+            res.redirect("/error?msg=留言失敗");
+        }
 });
 
-//err路由(避免有人太閒，想看錯誤頁面)
+//err路由
 app.get("/error",(req, res) => {
-    return err(res, "你很閒喔!!")
+    const msg=req.query.msg;
+    res.render("err.ejs", {error:msg})
 });
 
 //伺服器啟動

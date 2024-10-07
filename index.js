@@ -39,11 +39,6 @@ app.use(express.static("public"));
 //post請求處理
 app.use(express.urlencoded({extended:true}));
 
-//err function
-const err = (res, error) => {
-    res.render("err.ejs", {error:error})
-};
-
 //建立首頁路由
 app.get("/",async(req, res)=>{
 

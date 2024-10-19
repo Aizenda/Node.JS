@@ -7,11 +7,6 @@ body{
         linear-gradient(to right, #ccc 1px, transparent 1px), 
         linear-gradient(to bottom, #ccc 1px, transparent 1px);
     background-size: 5px 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
 }
 
 .Global{
@@ -35,27 +30,22 @@ div{
     margin-top: 5px
 }
 
-form{
-    display: flex;
-    flex-direction: column ;
-    align-items: center; 
-    justify-content: center;
-    border: 1px solid #ccc; 
-    padding: 20px; 
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+.fas.fa-user-circle{
+    font-size: 30px; 
+    color: #009CAC; 
+    margin-right: 5px;
 }
 
-input {
-    margin-bottom: 10px; /* 輸入框之間的間距 */
-    width: 100%; /* 調整輸入框寬度 */
-    max-width: 300px; /* 設定最大寬度 */
+.name-color{
+    color: #009CAC;
 }
 
-span{
-    font-weight: bolder;
+.divShadow{
+    padding: 10px;
+    box-shadow: 10px 4px 10px rgba(0, 0, 0, 0.2),
+    0px 0px 5px rgba(0, 0, 0, 0.15);
 }
 
-button {
-    cursor: pointer; /* 增加手型游標 */
+.time-font-size{
+    font-size: 10px;
 }
